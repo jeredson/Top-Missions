@@ -1,0 +1,191 @@
+{
+  "church": {
+    "name": "Grace Community Church",
+    "tagline": "A Place of Faith, Love, and Community",
+    "phone": "+1 (555) 123-4567",
+    "email": "info@gracechurch.org",
+    "address": "123 Faith Avenue, Blessed City, BC 12345"
+  },
+  "scriptures": [
+    {
+      "id": "1",
+      "text": "For where two or three gather in my name, there am I with them.",
+      "reference": "Matthew 18:20"
+    },
+    {
+      "id": "2",
+      "text": "Trust in the LORD with all your heart and lean not on your own understanding.",
+      "reference": "Proverbs 3:5"
+    },
+    {
+      "id": "3",
+      "text": "I can do all things through Christ who strengthens me.",
+      "reference": "Philippians 4:13"
+    },
+    {
+      "id": "4",
+      "text": "The Lord is my shepherd; I shall not want.",
+      "reference": "Psalm 23:1"
+    }
+  ],
+  "about": {
+    "vision": "To be a beacon of hope and love in our community, transforming lives through the power of God's grace and the fellowship of believers.",
+    "mission": "We exist to glorify God by making disciples who worship passionately, grow spiritually, connect relationally, and serve compassionately.",
+    "history": "Founded in 1985, Grace Community Church began as a small gathering of 12 families passionate about sharing God's love. Over the decades, we've grown into a vibrant community of believers, touching thousands of lives through worship, outreach, and discipleship. Our journey has been marked by God's faithfulness and the unwavering commitment of our congregation to serve one another and our neighbors."
+  },
+  "leadership": [
+    {
+      "id": "1",
+      "name": "Pastor David Emmanuel",
+      "role": "Senior Pastor",
+      "bio": "Pastor David has been leading Grace Community Church for over 15 years. His passion for teaching God's Word and shepherding the congregation has transformed countless lives.",
+      "image": "/placeholder.svg"
+    },
+    {
+      "id": "2",
+      "name": "Pastor Sarah Grace",
+      "role": "Associate Pastor",
+      "bio": "Pastor Sarah oversees our women's ministry and community outreach programs. Her heart for service inspires our congregation to love our neighbors.",
+      "image": "/placeholder.svg"
+    },
+    {
+      "id": "3",
+      "name": "Pastor Michael Hope",
+      "role": "Youth Pastor",
+      "bio": "Pastor Michael leads our youth and young adult ministries. His dynamic approach to ministry connects with the next generation in powerful ways.",
+      "image": "/placeholder.svg"
+    }
+  ],
+  "services": [
+    {
+      "id": "1",
+      "title": "Sunday Worship",
+      "description": "Join us for a powerful time of worship, prayer, and the Word of God. Our Sunday services are designed to encounter God's presence together.",
+      "time": "Sundays at 9:00 AM & 11:00 AM",
+      "location": "Main Sanctuary",
+      "image": "/placeholder.svg",
+      "gallery": [],
+      "videos": []
+    },
+    {
+      "id": "2",
+      "title": "Prayer Meetings",
+      "description": "Come together with fellow believers to seek God's face. Experience the power of corporate prayer and intercession.",
+      "time": "Wednesdays at 7:00 PM",
+      "location": "Prayer Chapel",
+      "image": "/placeholder.svg",
+      "gallery": [],
+      "videos": []
+    },
+    {
+      "id": "3",
+      "title": "Bible Study",
+      "description": "Dive deep into God's Word through our interactive Bible study sessions. Grow in your understanding of Scripture.",
+      "time": "Thursdays at 7:00 PM",
+      "location": "Fellowship Hall",
+      "image": "/placeholder.svg",
+      "gallery": [],
+      "videos": []
+    },
+    {
+      "id": "4",
+      "title": "Special Events",
+      "description": "From revival meetings to community celebrations, our special events bring people together in faith and fellowship.",
+      "time": "Various Dates",
+      "location": "Various Locations",
+      "image": "/placeholder.svg",
+      "gallery": [],
+      "videos": []
+    }
+  ],
+  "teensFellowship": {
+    "title": "Teens Fellowship",
+    "description": "A vibrant community for teenagers aged 13-17 to grow in faith, build friendships, and discover their purpose in Christ.",
+    "activities": [
+      {
+        "id": "1",
+        "title": "Youth Activities",
+        "description": "Fun-filled activities designed to build community and character."
+      },
+      {
+        "id": "2",
+        "title": "Summer Camps",
+        "description": "Life-changing camp experiences that deepen faith and create lasting memories."
+      },
+      {
+        "id": "3",
+        "title": "Workshops",
+        "description": "Interactive sessions on leadership, faith, and life skills."
+      }
+    ],
+    "gallery": [],
+    "videos": []
+  },
+  "youthFellowship": {
+    "title": "Youth Fellowship",
+    "description": "For young adults aged 18-30 seeking to navigate life with purpose. Join us for worship, connection, and growth.",
+    "activities": [
+      {
+        "id": "1",
+        "title": "Worship Nights",
+        "description": "Intimate worship gatherings where we encounter God's presence."
+      },
+      {
+        "id": "2",
+        "title": "Games & Outreach",
+        "description": "Building relationships while serving our community together."
+      }
+    ],
+    "gallery": [],
+    "videos": []
+  },
+  "media": {
+    "sermons": [
+      {
+        "id": "1",
+        "title": "Walking in Faith",
+        "speaker": "Pastor David Emmanuel",
+        "date": "2024-12-15",
+        "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "thumbnail": "/placeholder.svg",
+        "category": "Faith"
+      },
+      {
+        "id": "2",
+        "title": "The Power of Prayer",
+        "speaker": "Pastor Sarah Grace",
+        "date": "2024-12-08",
+        "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "thumbnail": "/placeholder.svg",
+        "category": "Prayer"
+      },
+      {
+        "id": "3",
+        "title": "Finding Purpose",
+        "speaker": "Pastor Michael Hope",
+        "date": "2024-12-01",
+        "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "thumbnail": "/placeholder.svg",
+        "category": "Purpose"
+      }
+    ],
+    "worshipSongs": [
+      {
+        "id": "1",
+        "title": "Amazing Grace",
+        "artist": "Grace Worship Team",
+        "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "thumbnail": "/placeholder.svg"
+      }
+    ],
+    "photoAlbums": [
+      {
+        "id": "1",
+        "title": "Sunday Worship Moments",
+        "date": "2024-12",
+        "photos": []
+      }
+    ]
+  },
+  "pages": []
+}
