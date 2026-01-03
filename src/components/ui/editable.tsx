@@ -128,7 +128,9 @@ export const EditableImage: React.FC<EditableImageProps> = ({
   const { isEditMode, uploadImage } = useInlineEdit();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (isEditMode) {
       fileInputRef.current?.click();
     }
@@ -142,18 +144,28 @@ export const EditableImage: React.FC<EditableImageProps> = ({
   };
 
   return (
-    <div className={`relative group ${isEditMode ? 'cursor-pointer' : ''}`} onClick={handleClick}>
+    <div className={`relative group ${isEditMode ? 'cursor-pointer' : ''}`}>
       <img
         src={src}
         alt={alt}
         className={`${className} ${isEditMode ? 'hover:opacity-80 transition-opacity' : ''}`}
+        onClick={handleClick}
       />
       {isEditMode && (
         <>
-          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-            <div className="bg-blue-500 text-white p-2 rounded-full">
-              <Upload className="w-5 h-5" />
+          <div 
+            className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-10"
+            onClick={handleClick}
+          >
+            <div className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition-colors">
+              <Upload className="w-6 h-6" />
             </div>
+          </div>
+          <div 
+            className="absolute top-2 right-2 bg-blue-500 text-white p-2 rounded-full shadow-lg opacity-80 hover:opacity-100 transition-opacity z-20 cursor-pointer"
+            onClick={handleClick}
+          >
+            <Upload className="w-4 h-4" />
           </div>
           <input
             ref={fileInputRef}
