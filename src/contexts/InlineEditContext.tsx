@@ -19,17 +19,20 @@ export const InlineEditProvider = ({ children }: { children: ReactNode }) => {
 
   const updateContent = (path: string, value: any) => {
     const pathArray = path.split('.');
-    const newContent = { ...content };
+    const newContent = JSON.parse(JSON.stringify(content)); // Deep clone
     
     let current = newContent;
     for (let i = 0; i < pathArray.length - 1; i++) {
-      if (current[pathArray[i]] === undefined) {
-        current[pathArray[i]] = {};
+      const key = pathArray[i];
+      if (current[key] === undefined) {
+        current[key] = {};
       }
-      current = current[pathArray[i]];
+      current = current[key];
     }
     
-    current[pathArray[pathArray.length - 1]] = value;
+    const lastKey = pathArray[pathArray.length - 1];
+    current[lastKey] = value;
+    
     updateContentContext(newContent);
   };
 

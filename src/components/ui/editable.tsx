@@ -23,13 +23,20 @@ export const EditableText: React.FC<EditableTextProps> = ({
   children
 }) => {
   const { isEditMode, editingElement, setEditingElement, updateContent } = useInlineEdit();
-  const [editValue, setEditValue] = useState(value);
+  const [editValue, setEditValue] = useState(value || '');
   const isEditing = editingElement === path;
 
-  const handleClick = () => {
+  // Update editValue when value prop changes
+  React.useEffect(() => {
+    setEditValue(value || '');
+  }, [value]);
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (isEditMode && !isEditing) {
       setEditingElement(path);
-      setEditValue(value);
+      setEditValue(value || '');
     }
   };
 
@@ -39,8 +46,17 @@ export const EditableText: React.FC<EditableTextProps> = ({
   };
 
   const handleCancel = () => {
-    setEditValue(value);
+    setEditValue(value || '');
     setEditingElement(null);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !multiline) {
+      handleSave();
+    }
+    if (e.key === 'Escape') {
+      handleCancel();
+    }
   };
 
   if (isEditing) {
@@ -50,6 +66,7 @@ export const EditableText: React.FC<EditableTextProps> = ({
           <Textarea
             value={editValue}
             onChange={(e) => setEditValue(e.target.value)}
+            onKeyDown={handleKeyDown}
             className={`${className} min-h-[100px]`}
             placeholder={placeholder}
             autoFocus
@@ -58,6 +75,7 @@ export const EditableText: React.FC<EditableTextProps> = ({
           <Input
             value={editValue}
             onChange={(e) => setEditValue(e.target.value)}
+            onKeyDown={handleKeyDown}
             className={className}
             placeholder={placeholder}
             autoFocus
@@ -79,12 +97,12 @@ export const EditableText: React.FC<EditableTextProps> = ({
 
   return (
     <div
-      className={`${className} ${isEditMode ? 'cursor-pointer hover:bg-blue-100/20 hover:outline hover:outline-2 hover:outline-blue-400 rounded transition-all' : ''} relative group`}
+      className={`${className} ${isEditMode ? 'cursor-pointer hover:bg-blue-100/20 hover:outline hover:outline-2 hover:outline-blue-400 rounded transition-all relative' : 'relative'} group`}
       onClick={handleClick}
     >
-      {children || value}
+      {children || value || placeholder}
       {isEditMode && (
-        <div className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
           <div className="bg-blue-500 text-white p-1 rounded-full text-xs">
             <Edit className="w-3 h-3" />
           </div>

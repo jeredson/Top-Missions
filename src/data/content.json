@@ -6,6 +6,12 @@
     "email": "info@gracechurch.org",
     "address": "123 Faith Avenue, Blessed City, BC 12345"
   },
+  "hero": {
+    "welcomeText": "Welcome to Our Church",
+    "title": "Experience the",
+    "titleHighlight": "Love of God",
+    "backgroundImage": ""
+  },
   "scriptures": [
     {
       "id": "1",
@@ -29,6 +35,9 @@
     }
   ],
   "about": {
+    "sectionTitle": "A Community of",
+    "sectionTitleHighlight": "Faith & Love",
+    "sectionDescription": "Join us on a journey of spiritual growth, meaningful connections, and community impact.",
     "vision": "To be a beacon of hope and love in our community, transforming lives through the power of God's grace and the fellowship of believers.",
     "mission": "We exist to glorify God by making disciples who worship passionately, grow spiritually, connect relationally, and serve compassionately.",
     "history": "Founded in 1985, Grace Community Church began as a small gathering of 12 families passionate about sharing God's love. Over the decades, we've grown into a vibrant community of believers, touching thousands of lives through worship, outreach, and discipleship. Our journey has been marked by God's faithfulness and the unwavering commitment of our congregation to serve one another and our neighbors."
