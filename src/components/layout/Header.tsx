@@ -3,9 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Cross } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { EditModeIndicator } from '@/components/ui/EditModeIndicator';
 import { useContent } from '@/contexts/ContentContext';
-import { useInlineEdit } from '@/contexts/InlineEditContext';
 import { useAdminAccess } from '@/hooks/useAdminAccess';
 import AdminLoginModal from '@/components/admin/AdminLoginModal';
 
@@ -23,8 +21,7 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const { content, isAdmin, setIsAdmin } = useContent();
-  const { isEditMode, setEditMode } = useInlineEdit();
+  const { content, isAdmin, setIsAdmin, editMode, setEditMode } = useContent();
   const { showLoginModal, setShowLoginModal, handleLogoClick, login, logout } = useAdminAccess();
 
   useEffect(() => {
@@ -103,11 +100,11 @@ const Header = () => {
               {isAdmin && (
                 <div className="flex items-center gap-2">
                   <Button
-                    variant={isEditMode ? 'destructive' : 'outline'}
+                    variant={editMode ? 'destructive' : 'outline'}
                     size="sm"
-                    onClick={() => setEditMode(!isEditMode)}
+                    onClick={() => setEditMode(!editMode)}
                   >
-                    {isEditMode ? 'Exit Edit Mode' : 'Edit Mode'}
+                    {editMode ? 'Exit Edit Mode' : 'Edit Mode'}
                   </Button>
                   <Link to="/admin">
                     <Button variant="admin" size="sm">
@@ -169,10 +166,10 @@ const Header = () => {
                   <>
                     <hr className="border-border my-2" />
                     <Button
-                      variant={isEditMode ? 'destructive' : 'outline'}
-                      onClick={() => setEditMode(!isEditMode)}
+                      variant={editMode ? 'destructive' : 'outline'}
+                      onClick={() => setEditMode(!editMode)}
                     >
-                      {isEditMode ? 'Exit Edit Mode' : 'Edit Mode'}
+                      {editMode ? 'Exit Edit Mode' : 'Edit Mode'}
                     </Button>
                     <Link to="/admin">
                       <Button variant="admin" className="w-full">
@@ -198,8 +195,6 @@ const Header = () => {
         onClose={() => setShowLoginModal(false)}
         onLogin={login}
       />
-      
-      <EditModeIndicator />
     </>
   );
 };

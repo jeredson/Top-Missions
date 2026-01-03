@@ -13,9 +13,8 @@ interface InlineEditContextType {
 const InlineEditContext = createContext<InlineEditContextType | undefined>(undefined);
 
 export const InlineEditProvider = ({ children }: { children: ReactNode }) => {
-  const [isEditMode, setEditMode] = useState(false);
   const [editingElement, setEditingElement] = useState<string | null>(null);
-  const { content, updateContent: updateContentContext } = useContent();
+  const { content, updateContent: updateContentContext, editMode, setEditMode } = useContent();
 
   const updateContent = (path: string, value: any) => {
     const pathArray = path.split('.');
@@ -47,7 +46,7 @@ export const InlineEditProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <InlineEditContext.Provider value={{
-      isEditMode,
+      isEditMode: editMode,
       setEditMode,
       editingElement,
       setEditingElement,

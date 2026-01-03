@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { ContentProvider } from "@/contexts/ContentContext";
 import { InlineEditProvider } from "@/contexts/InlineEditContext";
+import { EditModeIndicator } from "@/components/ui/EditModeIndicator";
 import Index from "./pages/Index";
 import AboutPage from "./pages/AboutPage";
 import ServicesPage from "./pages/ServicesPage";
@@ -26,6 +27,7 @@ const App = () => (
           <TooltipProvider>
             <Toaster />
             <Sonner />
+            <EditModeIndicator />
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Index />} />

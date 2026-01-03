@@ -30,8 +30,7 @@ import {
 import { Link } from 'react-router-dom';
 
 const AdminPage = () => {
-  const { content, updateContent, isAdmin, exportContent } = useContent();
-  const { isEditMode, setEditMode } = useInlineEdit();
+  const { content, updateContent, isAdmin, exportContent, editMode, setEditMode } = useContent();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [editingImage, setEditingImage] = useState<string | null>(null);
@@ -119,9 +118,21 @@ const AdminPage = () => {
           <span>Back to Site</span>
         </Link>
 
-        <h1 className="font-display text-xl font-bold text-foreground mb-8">
+        <h1 className="font-display text-xl font-bold text-foreground mb-4">
           Admin Panel
         </h1>
+
+        {/* Quick Edit Mode Toggle */}
+        <div className="mb-6">
+          <Button 
+            variant={editMode ? "destructive" : "gold"} 
+            className="w-full" 
+            onClick={() => setEditMode(!editMode)}
+          >
+            {editMode ? <EyeOff className="w-4 h-4 mr-2" /> : <Eye className="w-4 h-4 mr-2" />}
+            {editMode ? 'Exit Edit Mode' : 'Live Edit Mode'}
+          </Button>
+        </div>
 
         <nav className="flex-1 space-y-2">
           {sidebarItems.map((item) => (
@@ -142,12 +153,12 @@ const AdminPage = () => {
 
         <div className="pt-6 border-t border-border space-y-3">
           <Button 
-            variant={isEditMode ? "destructive" : "gold"} 
+            variant={editMode ? "destructive" : "gold"} 
             className="w-full" 
-            onClick={() => setEditMode(!isEditMode)}
+            onClick={() => setEditMode(!editMode)}
           >
-            {isEditMode ? <EyeOff className="w-4 h-4 mr-2" /> : <Eye className="w-4 h-4 mr-2" />}
-            {isEditMode ? 'Exit Edit Mode' : 'Live Edit Mode'}
+            {editMode ? <EyeOff className="w-4 h-4 mr-2" /> : <Eye className="w-4 h-4 mr-2" />}
+            {editMode ? 'Exit Edit Mode' : 'Live Edit Mode'}
           </Button>
           <Button variant="gold" className="w-full" onClick={handleSave}>
             <Save className="w-4 h-4 mr-2" />
