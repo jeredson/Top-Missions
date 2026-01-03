@@ -67,7 +67,7 @@ export const EditableText: React.FC<EditableTextProps> = ({
             value={editValue}
             onChange={(e) => setEditValue(e.target.value)}
             onKeyDown={handleKeyDown}
-            className={`${className} min-h-[100px]`}
+            className={`${className} min-h-[100px] text-black bg-white border-2 border-blue-500`}
             placeholder={placeholder}
             autoFocus
           />
@@ -76,7 +76,7 @@ export const EditableText: React.FC<EditableTextProps> = ({
             value={editValue}
             onChange={(e) => setEditValue(e.target.value)}
             onKeyDown={handleKeyDown}
-            className={className}
+            className={`${className} text-black bg-white border-2 border-blue-500`}
             placeholder={placeholder}
             autoFocus
           />

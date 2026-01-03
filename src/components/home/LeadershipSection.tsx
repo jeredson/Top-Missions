@@ -30,11 +30,24 @@ const LeadershipSection = () => {
             Our Leadership
           </span>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Meet Our <span className="text-primary">Pastors</span>
+            <EditableText
+              path="leadership.sectionTitle"
+              value="Meet Our"
+              className="inline"
+            />{' '}
+            <span className="text-primary">
+              <EditableText
+                path="leadership.sectionTitleHighlight"
+                value="Pastors"
+                className="inline"
+              />
+            </span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Dedicated servants of God committed to shepherding our congregation with love and wisdom.
-          </p>
+          <EditableText
+            path="leadership.sectionDescription"
+            value="Dedicated servants of God committed to shepherding our congregation with love and wisdom."
+            className="text-muted-foreground text-lg max-w-2xl mx-auto"
+          />
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

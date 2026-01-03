@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Calendar, MapPin, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { EditableText } from '@/components/ui/editable';
 import { useContent } from '@/contexts/ContentContext';
 
 const CTASection = () => {
@@ -27,13 +28,25 @@ const CTASection = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="font-display text-4xl md:text-5xl font-bold text-primary-foreground mb-6">
-              Join Us This{' '}
-              <span className="text-gold">Sunday</span>
+              <EditableText
+                path="cta.title"
+                value="Join Us This"
+                className="inline text-primary-foreground"
+              />{' '}
+              <span className="text-gold">
+                <EditableText
+                  path="cta.titleHighlight"
+                  value="Sunday"
+                  className="inline text-gold"
+                />
+              </span>
             </h2>
-            <p className="text-primary-foreground/80 text-lg mb-8 leading-relaxed">
-              We'd love to welcome you to our church family. Come as you are and experience 
-              the warmth of our community and the power of God's love.
-            </p>
+            <EditableText
+              path="cta.description"
+              value="We'd love to welcome you to our church family. Come as you are and experience the warmth of our community and the power of God's love."
+              className="text-primary-foreground/80 text-lg mb-8 leading-relaxed"
+              multiline
+            />
             <div className="flex flex-wrap gap-4">
               <Button variant="hero" size="xl" asChild>
                 <Link to="/contact">Visit Us</Link>
@@ -58,11 +71,17 @@ const CTASection = () => {
                 </div>
                 <div>
                   <h3 className="text-primary-foreground font-semibold text-lg mb-1">
-                    Sunday Worship
+                    <EditableText
+                      path="cta.sundayWorship.title"
+                      value="Sunday Worship"
+                      className="inline text-primary-foreground"
+                    />
                   </h3>
-                  <p className="text-primary-foreground/70">
-                    9:00 AM & 11:00 AM
-                  </p>
+                  <EditableText
+                    path="cta.sundayWorship.time"
+                    value="9:00 AM & 11:00 AM"
+                    className="text-primary-foreground/70"
+                  />
                 </div>
               </div>
             </div>
@@ -74,11 +93,17 @@ const CTASection = () => {
                 </div>
                 <div>
                   <h3 className="text-primary-foreground font-semibold text-lg mb-1">
-                    Location
+                    <EditableText
+                      path="cta.location.title"
+                      value="Location"
+                      className="inline text-primary-foreground"
+                    />
                   </h3>
-                  <p className="text-primary-foreground/70">
-                    {content.church.address}
-                  </p>
+                  <EditableText
+                    path="church.address"
+                    value={content.church.address}
+                    className="text-primary-foreground/70"
+                  />
                 </div>
               </div>
             </div>
@@ -90,11 +115,17 @@ const CTASection = () => {
                 </div>
                 <div>
                   <h3 className="text-primary-foreground font-semibold text-lg mb-1">
-                    Contact
+                    <EditableText
+                      path="cta.contact.title"
+                      value="Contact"
+                      className="inline text-primary-foreground"
+                    />
                   </h3>
-                  <p className="text-primary-foreground/70">
-                    {content.church.phone}
-                  </p>
+                  <EditableText
+                    path="church.phone"
+                    value={content.church.phone}
+                    className="text-primary-foreground/70"
+                  />
                 </div>
               </div>
             </div>

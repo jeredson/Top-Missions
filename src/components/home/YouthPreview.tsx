@@ -3,10 +3,13 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { ArrowRight, Users, Flame } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { EditableText, EditableImage } from '@/components/ui/editable';
+import { useContent } from '@/contexts/ContentContext';
 import youthImage from '@/assets/youth-worship.jpg';
 import teensImage from '@/assets/teens-camp.jpg';
 
 const YouthPreview = () => {
+  const { content } = useContent();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
@@ -23,11 +26,24 @@ const YouthPreview = () => {
             Next Generation
           </span>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Youth & Teens <span className="text-gold">Ministries</span>
+            <EditableText
+              path="youth.sectionTitle"
+              value="Youth & Teens"
+              className="inline"
+            />{' '}
+            <span className="text-gold">
+              <EditableText
+                path="youth.sectionTitleHighlight"
+                value="Ministries"
+                className="inline"
+              />
+            </span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Empowering the next generation to discover their purpose and live for Christ.
-          </p>
+          <EditableText
+            path="youth.sectionDescription"
+            value="Empowering the next generation to discover their purpose and live for Christ."
+            className="text-muted-foreground text-lg max-w-2xl mx-auto"
+          />
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-8">
@@ -39,8 +55,9 @@ const YouthPreview = () => {
             className="group"
           >
             <div className="netflix-card relative h-[400px] rounded-2xl overflow-hidden">
-              <img
-                src={teensImage}
+              <EditableImage
+                path="teensFellowship.image"
+                src={content.teensFellowship?.image || teensImage}
                 alt="Teens Fellowship"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
@@ -53,11 +70,18 @@ const YouthPreview = () => {
                   <span className="text-gold font-medium">Ages 13-17</span>
                 </div>
                 <h3 className="font-display text-3xl font-bold text-primary-foreground mb-3">
-                  Teens Fellowship
+                  <EditableText
+                    path="teensFellowship.title"
+                    value={content.teensFellowship?.title || "Teens Fellowship"}
+                    className="inline text-primary-foreground"
+                  />
                 </h3>
-                <p className="text-primary-foreground/80 mb-6 max-w-md">
-                  Fun activities, camps, and workshops designed to help teenagers grow in faith and friendships.
-                </p>
+                <EditableText
+                  path="teensFellowship.description"
+                  value={content.teensFellowship?.description || "Fun activities, camps, and workshops designed to help teenagers grow in faith and friendships."}
+                  className="text-primary-foreground/80 mb-6 max-w-md"
+                  multiline
+                />
                 <Button variant="hero" size="lg" asChild className="w-fit">
                   <Link to="/teens" className="flex items-center gap-2">
                     Explore Teens Ministry
@@ -76,8 +100,9 @@ const YouthPreview = () => {
             className="group"
           >
             <div className="netflix-card relative h-[400px] rounded-2xl overflow-hidden">
-              <img
-                src={youthImage}
+              <EditableImage
+                path="youthFellowship.image"
+                src={content.youthFellowship?.image || youthImage}
                 alt="Youth Fellowship"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
@@ -90,11 +115,18 @@ const YouthPreview = () => {
                   <span className="text-gold font-medium">Ages 18-30</span>
                 </div>
                 <h3 className="font-display text-3xl font-bold text-primary-foreground mb-3">
-                  Youth Fellowship
+                  <EditableText
+                    path="youthFellowship.title"
+                    value={content.youthFellowship?.title || "Youth Fellowship"}
+                    className="inline text-primary-foreground"
+                  />
                 </h3>
-                <p className="text-primary-foreground/80 mb-6 max-w-md">
-                  Worship nights, games, and outreach opportunities for young adults seeking purpose.
-                </p>
+                <EditableText
+                  path="youthFellowship.description"
+                  value={content.youthFellowship?.description || "Worship nights, games, and outreach opportunities for young adults seeking purpose."}
+                  className="text-primary-foreground/80 mb-6 max-w-md"
+                  multiline
+                />
                 <Button variant="hero" size="lg" asChild className="w-fit">
                   <Link to="/youth" className="flex items-center gap-2">
                     Explore Youth Ministry
