@@ -154,7 +154,7 @@ export const EditableImage: React.FC<EditableImageProps> = ({
       {isEditMode && (
         <>
           <div 
-            className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-10"
+            className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-50"
             onClick={handleClick}
           >
             <div className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition-colors">
@@ -162,7 +162,7 @@ export const EditableImage: React.FC<EditableImageProps> = ({
             </div>
           </div>
           <div 
-            className="absolute top-2 right-2 bg-blue-500 text-white p-2 rounded-full shadow-lg opacity-80 hover:opacity-100 transition-opacity z-20 cursor-pointer"
+            className="absolute top-2 right-2 bg-blue-500 text-white p-2 rounded-full shadow-lg opacity-80 hover:opacity-100 transition-opacity z-50 cursor-pointer"
             onClick={handleClick}
           >
             <Upload className="w-4 h-4" />

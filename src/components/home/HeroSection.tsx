@@ -52,7 +52,7 @@ const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image with Parallax Effect */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 z-0">
         <EditableImage
           path="hero.backgroundImage"
           src={content.hero?.backgroundImage || heroImage}
@@ -60,9 +60,9 @@ const HeroSection = () => {
           className="w-full h-full object-cover"
         />
         {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-royal/80 via-royal-dark/70 to-royal-dark/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-royal/80 via-royal-dark/70 to-royal-dark/90 pointer-events-none" />
         {/* Animated Light Rays */}
-        <div className="absolute inset-0 opacity-30">
+        <div className="absolute inset-0 opacity-30 pointer-events-none">
           <div className="absolute top-0 left-1/4 w-96 h-full bg-gradient-to-b from-gold/40 to-transparent blur-3xl transform -skew-x-12" />
           <div className="absolute top-0 right-1/3 w-64 h-full bg-gradient-to-b from-gold/20 to-transparent blur-2xl transform skew-x-12" />
         </div>
