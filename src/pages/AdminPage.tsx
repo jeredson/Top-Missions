@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useContent } from '@/contexts/ContentContext';
+import { useInlineEdit } from '@/contexts/InlineEditContext';
 import { ContentManager } from '@/components/admin/ContentManager';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -23,11 +24,14 @@ import {
   Database,
   Edit,
   Upload,
+  Eye,
+  EyeOff,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const AdminPage = () => {
   const { content, updateContent, isAdmin, exportContent } = useContent();
+  const { isEditMode, setEditMode } = useInlineEdit();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [editingImage, setEditingImage] = useState<string | null>(null);
@@ -137,6 +141,14 @@ const AdminPage = () => {
         </nav>
 
         <div className="pt-6 border-t border-border space-y-3">
+          <Button 
+            variant={isEditMode ? "destructive" : "gold"} 
+            className="w-full" 
+            onClick={() => setEditMode(!isEditMode)}
+          >
+            {isEditMode ? <EyeOff className="w-4 h-4 mr-2" /> : <Eye className="w-4 h-4 mr-2" />}
+            {isEditMode ? 'Exit Edit Mode' : 'Live Edit Mode'}
+          </Button>
           <Button variant="gold" className="w-full" onClick={handleSave}>
             <Save className="w-4 h-4 mr-2" />
             Save Changes

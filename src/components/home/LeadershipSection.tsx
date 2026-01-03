@@ -1,5 +1,6 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { EditableText, EditableImage } from '@/components/ui/editable';
 import { useContent } from '@/contexts/ContentContext';
 import pastorDavid from '@/assets/pastor-david.jpg';
 import pastorSarah from '@/assets/pastor-sarah.jpg';
@@ -48,8 +49,9 @@ const LeadershipSection = () => {
               <div className="floating-card bg-card rounded-2xl overflow-hidden text-center">
                 <div className="relative pt-8 px-8">
                   <div className="relative w-48 h-48 mx-auto rounded-full overflow-hidden ring-4 ring-gold/20 group-hover:ring-gold/40 transition-all duration-300">
-                    <img
-                      src={leaderImages[leader.id] || pastorDavid}
+                    <EditableImage
+                      path={`leadership.${index}.image`}
+                      src={leader.image || leaderImages[leader.id] || pastorDavid}
                       alt={leader.name}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
@@ -61,12 +63,25 @@ const LeadershipSection = () => {
                 </div>
                 <div className="p-8">
                   <h3 className="font-display text-xl font-semibold text-foreground mb-1">
-                    {leader.name}
+                    <EditableText
+                      path={`leadership.${index}.name`}
+                      value={leader.name}
+                      className="inline"
+                    />
                   </h3>
-                  <p className="text-gold font-medium mb-4">{leader.role}</p>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {leader.bio}
+                  <p className="text-gold font-medium mb-4">
+                    <EditableText
+                      path={`leadership.${index}.role`}
+                      value={leader.role}
+                      className="inline"
+                    />
                   </p>
+                  <EditableText
+                    path={`leadership.${index}.bio`}
+                    value={leader.bio}
+                    className="text-muted-foreground text-sm leading-relaxed"
+                    multiline
+                  />
                 </div>
               </div>
             </motion.div>

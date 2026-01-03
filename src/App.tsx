@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { ContentProvider } from "@/contexts/ContentContext";
+import { InlineEditProvider } from "@/contexts/InlineEditContext";
 import Index from "./pages/Index";
 import AboutPage from "./pages/AboutPage";
 import ServicesPage from "./pages/ServicesPage";
@@ -21,23 +22,25 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <HelmetProvider>
       <ContentProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/services" element={<ServicesPage />} />
-              <Route path="/teens" element={<TeensPage />} />
-              <Route path="/youth" element={<YouthPage />} />
-              <Route path="/media" element={<MediaPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/admin" element={<AdminPage />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
+        <InlineEditProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/services" element={<ServicesPage />} />
+                <Route path="/teens" element={<TeensPage />} />
+                <Route path="/youth" element={<YouthPage />} />
+                <Route path="/media" element={<MediaPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/admin" element={<AdminPage />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </InlineEditProvider>
       </ContentProvider>
     </HelmetProvider>
   </QueryClientProvider>

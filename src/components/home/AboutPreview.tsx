@@ -4,6 +4,7 @@ import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { ArrowRight, Target, Heart, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { EditableText } from '@/components/ui/editable';
 import { useContent } from '@/contexts/ContentContext';
 
 const AboutPreview = () => {
@@ -42,12 +43,24 @@ const AboutPreview = () => {
             About Our Church
           </span>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
-            A Community of{' '}
-            <span className="text-primary">Faith & Love</span>
+            <EditableText
+              path="about.sectionTitle"
+              value={content.about?.sectionTitle || "A Community of"}
+              className="inline"
+            />{' '}
+            <span className="text-primary">
+              <EditableText
+                path="about.sectionTitleHighlight"
+                value={content.about?.sectionTitleHighlight || "Faith & Love"}
+                className="inline"
+              />
+            </span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Join us on a journey of spiritual growth, meaningful connections, and community impact.
-          </p>
+          <EditableText
+            path="about.sectionDescription"
+            value={content.about?.sectionDescription || "Join us on a journey of spiritual growth, meaningful connections, and community impact."}
+            className="text-muted-foreground text-lg max-w-2xl mx-auto"
+          />
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8 mb-12">

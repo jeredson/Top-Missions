@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Users, Phone, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { EditableText, EditableImage } from '@/components/ui/editable';
 import { useContent } from '@/contexts/ContentContext';
 import heroImage from '@/assets/hero-church.jpg';
 
@@ -52,11 +53,9 @@ const HeroSection = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image with Parallax Effect */}
       <div className="absolute inset-0">
-        <motion.img
-          initial={{ scale: 1.1 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 1.5, ease: 'easeOut' }}
-          src={heroImage}
+        <EditableImage
+          path="hero.backgroundImage"
+          src={content.hero?.backgroundImage || heroImage}
           alt="Church Sanctuary"
           className="w-full h-full object-cover"
         />
@@ -85,7 +84,11 @@ const HeroSection = () => {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/20 backdrop-blur-sm border border-gold/30 mb-8"
           >
             <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-            <span className="text-gold text-sm font-medium">Welcome to Our Church</span>
+            <EditableText
+              path="hero.welcomeText"
+              value={content.hero?.welcomeText || "Welcome to Our Church"}
+              className="text-gold text-sm font-medium"
+            />
           </motion.div>
 
           {/* Main Heading */}
@@ -95,8 +98,18 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-6 leading-tight"
           >
-            Experience the{' '}
-            <span className="text-gold">Love of God</span>
+            <EditableText
+              path="hero.title"
+              value={content.hero?.title || "Experience the"}
+              className="inline"
+            />{' '}
+            <span className="text-gold">
+              <EditableText
+                path="hero.titleHighlight"
+                value={content.hero?.titleHighlight || "Love of God"}
+                className="inline"
+              />
+            </span>
           </motion.h1>
 
           {/* Enhanced Scripture Carousel */}
