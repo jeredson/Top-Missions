@@ -5,7 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { CloudflareAPI } from '@/services/cloudflare';
+import { FirebaseAPI } from '@/services/firebase';
 
 export const ContentManager = () => {
   const [content, setContent] = useState({
@@ -32,7 +32,7 @@ export const ContentManager = () => {
 
   const loadPhotos = async () => {
     try {
-      const result = await CloudflareAPI.getPhotos();
+      const result = await FirebaseAPI.getPhotos();
       setPhotos(result);
     } catch (error) {
       console.error('Error loading photos:', error);
@@ -41,7 +41,7 @@ export const ContentManager = () => {
 
   const loadContents = async () => {
     try {
-      const result = await CloudflareAPI.getContent();
+      const result = await FirebaseAPI.getContent();
       setContents(result);
     } catch (error) {
       console.error('Error loading contents:', error);
@@ -51,7 +51,7 @@ export const ContentManager = () => {
   const handleSaveContent = async () => {
     setLoading(true);
     try {
-      await CloudflareAPI.saveContent(content);
+      await FirebaseAPI.saveContent(content);
       alert('Content saved successfully!');
       setContent({ type: '', title: '', content: '', excerpt: '', status: 'published' });
       loadContents();
@@ -66,7 +66,7 @@ export const ContentManager = () => {
     
     setLoading(true);
     try {
-      const result = await CloudflareAPI.uploadPhoto(file, photoOptions);
+      const result = await FirebaseAPI.uploadPhoto(file, photoOptions);
       alert(`Photo uploaded successfully!`);
       setFile(null);
       setPhotoOptions({ category: 'general', altText: '', caption: '' });
@@ -214,7 +214,7 @@ export const ContentManager = () => {
                 <div className="space-y-2 max-h-64 overflow-y-auto">
                   {photos.map((photo: any) => (
                     <div key={photo.id} className="p-2 border rounded">
-                      <div className="font-medium">{photo.original_name}</div>
+                      <div className="font-medium">{photo.originalName}</div>
                       <div className="text-sm text-gray-500">{photo.category}</div>
                     </div>
                   ))}

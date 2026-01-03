@@ -37,5 +37,10 @@ dist-ssr
 build/
 out/
 
+# Firebase
+.firebase
+firebase-debug.log
+firestore-debug.log
+
 .vercel
 .env*.local
