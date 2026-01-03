@@ -1,1 +1,16 @@
-import React from 'react';\nimport { useInlineEdit } from '@/contexts/InlineEditContext';\nimport { Edit } from 'lucide-react';\n\nexport const EditModeIndicator = () => {\n  const { isEditMode } = useInlineEdit();\n\n  if (!isEditMode) return null;\n\n  return (\n    <div className=\"fixed top-4 right-4 z-50 bg-blue-500 text-white px-4 py-2 rounded-full shadow-lg flex items-center gap-2 animate-pulse\">\n      <Edit className=\"w-4 h-4\" />\n      <span className=\"text-sm font-medium\">Edit Mode Active - Click to Edit</span>\n    </div>\n  );\n};
+import React from 'react';
+import { useInlineEdit } from '@/contexts/InlineEditContext';
+import { Edit } from 'lucide-react';
+
+export const EditModeIndicator = () => {
+  const { isEditMode } = useInlineEdit();
+
+  if (!isEditMode) return null;
+
+  return (
+    <div className="fixed top-4 right-4 z-50 bg-blue-500 text-white px-4 py-2 rounded-full shadow-lg flex items-center gap-2 animate-pulse">
+      <Edit className="w-4 h-4" />
+      <span className="text-sm font-medium">Edit Mode Active - Click to Edit</span>
+    </div>
+  );
+};
