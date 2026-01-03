@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useContent } from '@/contexts/ContentContext';
+import { ContentManager } from '@/components/admin/ContentManager';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -18,6 +19,7 @@ import {
   Save,
   ArrowLeft,
   Trash2,
+  Database,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -39,6 +41,7 @@ const AdminPage = () => {
 
   const sidebarItems = [
     { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+    { id: 'content-manager', icon: Database, label: 'Content Manager' },
     { id: 'pages', icon: FileText, label: 'Pages' },
     { id: 'content', icon: FileText, label: 'Content' },
     { id: 'media', icon: Image, label: 'Media' },
@@ -88,11 +91,21 @@ const AdminPage = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-8 overflow-auto">
+      <main className="flex-1 overflow-auto">
+        {activeTab === 'content-manager' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <ContentManager />
+          </motion.div>
+        )}
+
         {activeTab === 'dashboard' && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            className="p-8"
           >
             <h2 className="font-display text-3xl font-bold text-foreground mb-8">
               Dashboard
@@ -121,6 +134,7 @@ const AdminPage = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            className="p-8"
           >
             <h2 className="font-display text-3xl font-bold text-foreground mb-8">
               Edit Content
@@ -184,6 +198,7 @@ const AdminPage = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            className="p-8"
           >
             <div className="flex items-center justify-between mb-8">
               <h2 className="font-display text-3xl font-bold text-foreground">
@@ -222,6 +237,7 @@ const AdminPage = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            className="p-8"
           >
             <h2 className="font-display text-3xl font-bold text-foreground mb-8">
               Media Library
@@ -236,6 +252,7 @@ const AdminPage = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            className="p-8"
           >
             <h2 className="font-display text-3xl font-bold text-foreground mb-8">
               Settings

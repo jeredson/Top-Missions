@@ -5,7 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { FirebaseAPI } from '@/services/firebase';
+import { LocalStorageAPI } from '@/services/localStorage';
 
 export const ContentManager = () => {
   const [content, setContent] = useState({
@@ -32,7 +32,7 @@ export const ContentManager = () => {
 
   const loadPhotos = async () => {
     try {
-      const result = await FirebaseAPI.getPhotos();
+      const result = await LocalStorageAPI.getPhotos();
       setPhotos(result);
     } catch (error) {
       console.error('Error loading photos:', error);
@@ -41,7 +41,7 @@ export const ContentManager = () => {
 
   const loadContents = async () => {
     try {
-      const result = await FirebaseAPI.getContent();
+      const result = await LocalStorageAPI.getContent();
       setContents(result);
     } catch (error) {
       console.error('Error loading contents:', error);
@@ -51,7 +51,7 @@ export const ContentManager = () => {
   const handleSaveContent = async () => {
     setLoading(true);
     try {
-      await FirebaseAPI.saveContent(content);
+      await LocalStorageAPI.saveContent(content);
       alert('Content saved successfully!');
       setContent({ type: '', title: '', content: '', excerpt: '', status: 'published' });
       loadContents();
@@ -66,7 +66,7 @@ export const ContentManager = () => {
     
     setLoading(true);
     try {
-      const result = await FirebaseAPI.uploadPhoto(file, photoOptions);
+      const result = await LocalStorageAPI.uploadPhoto(file, photoOptions);
       alert(`Photo uploaded successfully!`);
       setFile(null);
       setPhotoOptions({ category: 'general', altText: '', caption: '' });
@@ -77,15 +77,45 @@ export const ContentManager = () => {
     setLoading(false);
   };
 
+  const handleExportData = () => {
+    const data = LocalStorageAPI.exportData();
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `church-data-${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+  };
+
+  const handleImportData = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = JSON.parse(e.target?.result as string);
+        LocalStorageAPI.importData(data);
+        loadContents();
+        loadPhotos();
+        alert('Data imported successfully!');
+      } catch (error) {
+        alert('Error importing data');
+      }
+    };
+    reader.readAsText(file);
+  };
+
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <h2 className="text-3xl font-bold mb-6">Church Content Manager</h2>
       
       <Tabs defaultValue="content" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="content">Content</TabsTrigger>
           <TabsTrigger value="photos">Photos</TabsTrigger>
           <TabsTrigger value="manage">Manage</TabsTrigger>
+          <TabsTrigger value="backup">Backup</TabsTrigger>
         </TabsList>
         
         <TabsContent value="content">
@@ -222,6 +252,37 @@ export const ContentManager = () => {
               </CardContent>
             </Card>
           </div>
+        </TabsContent>
+        
+        <TabsContent value="backup">
+          <Card>
+            <CardHeader>
+              <CardTitle>Data Backup & Restore</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <h3 className="font-semibold mb-2">Export Data</h3>
+                <p className="text-sm text-gray-600 mb-2">Download all your content and photos as a backup file.</p>
+                <Button onClick={handleExportData} className="w-full">
+                  Export All Data
+                </Button>
+              </div>
+              
+              <div>
+                <h3 className="font-semibold mb-2">Import Data</h3>
+                <p className="text-sm text-gray-600 mb-2">Restore from a previously exported backup file.</p>
+                <Input
+                  type="file"
+                  accept=".json"
+                  onChange={handleImportData}
+                />
+              </div>
+              
+              <div className="text-sm text-gray-500">
+                <p><strong>Note:</strong> Data is stored locally in your browser. Use export/import to backup or transfer data between devices.</p>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
     </div>
