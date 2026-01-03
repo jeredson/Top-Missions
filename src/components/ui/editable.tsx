@@ -45,7 +45,7 @@ export const EditableText: React.FC<EditableTextProps> = ({
 
   if (isEditing) {
     return (
-      <div className=\"relative inline-block w-full\">
+      <div className="relative inline-block w-full">
         {multiline ? (
           <Textarea
             value={editValue}
@@ -63,13 +63,13 @@ export const EditableText: React.FC<EditableTextProps> = ({
             autoFocus
           />
         )}
-        <div className=\"flex gap-2 mt-2\">
-          <Button size=\"sm\" onClick={handleSave}>
-            <Save className=\"w-4 h-4 mr-1\" />
+        <div className="flex gap-2 mt-2">
+          <Button size="sm" onClick={handleSave}>
+            <Save className="w-4 h-4 mr-1" />
             Save
           </Button>
-          <Button size=\"sm\" variant=\"outline\" onClick={handleCancel}>
-            <X className=\"w-4 h-4 mr-1\" />
+          <Button size="sm" variant="outline" onClick={handleCancel}>
+            <X className="w-4 h-4 mr-1" />
             Cancel
           </Button>
         </div>
@@ -84,9 +84,9 @@ export const EditableText: React.FC<EditableTextProps> = ({
     >
       {children || value}
       {isEditMode && (
-        <div className=\"absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-opacity\">
-          <div className=\"bg-blue-500 text-white p-1 rounded-full text-xs\">
-            <Edit className=\"w-3 h-3\" />
+        <div className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="bg-blue-500 text-white p-1 rounded-full text-xs">
+            <Edit className="w-3 h-3" />
           </div>
         </div>
       )}
@@ -132,17 +132,17 @@ export const EditableImage: React.FC<EditableImageProps> = ({
       />
       {isEditMode && (
         <>
-          <div className=\"absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center\">
-            <div className=\"bg-blue-500 text-white p-2 rounded-full\">
-              <Upload className=\"w-5 h-5\" />
+          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+            <div className="bg-blue-500 text-white p-2 rounded-full">
+              <Upload className="w-5 h-5" />
             </div>
           </div>
           <input
             ref={fileInputRef}
-            type=\"file\"
-            accept=\"image/*\"
+            type="file"
+            accept="image/*"
             onChange={handleFileChange}
-            className=\"hidden\"
+            className="hidden"
           />
         </>
       )}
