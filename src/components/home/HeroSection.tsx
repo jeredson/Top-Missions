@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Users, Phone, ChevronDown } from 'lucide-react';
+import { Play, Users, Phone, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useContent } from '@/contexts/ContentContext';
 import heroImage from '@/assets/hero-church.jpg';
@@ -9,13 +9,37 @@ import heroImage from '@/assets/hero-church.jpg';
 const HeroSection = () => {
   const { content } = useContent();
   const [currentScripture, setCurrentScripture] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   useEffect(() => {
+    if (!isAutoPlaying) return;
+    
     const interval = setInterval(() => {
       setCurrentScripture((prev) => (prev + 1) % content.scriptures.length);
     }, 6000);
     return () => clearInterval(interval);
-  }, [content.scriptures.length]);
+  }, [content.scriptures.length, isAutoPlaying]);
+
+  const nextScripture = () => {
+    setIsAutoPlaying(false);
+    setCurrentScripture((prev) => (prev + 1) % content.scriptures.length);
+    // Resume auto-play after 10 seconds
+    setTimeout(() => setIsAutoPlaying(true), 10000);
+  };
+
+  const prevScripture = () => {
+    setIsAutoPlaying(false);
+    setCurrentScripture((prev) => (prev - 1 + content.scriptures.length) % content.scriptures.length);
+    // Resume auto-play after 10 seconds
+    setTimeout(() => setIsAutoPlaying(true), 10000);
+  };
+
+  const goToScripture = (index: number) => {
+    setIsAutoPlaying(false);
+    setCurrentScripture(index);
+    // Resume auto-play after 10 seconds
+    setTimeout(() => setIsAutoPlaying(true), 10000);
+  };
 
   const scrollToNext = () => {
     window.scrollTo({
@@ -75,25 +99,46 @@ const HeroSection = () => {
             <span className="text-gold">Love of God</span>
           </motion.h1>
 
-          {/* Animated Scripture */}
-          <div className="h-24 mb-10 flex items-center justify-center">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentScripture}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-                className="text-center"
-              >
-                <p className="text-primary-foreground/90 text-lg md:text-xl italic font-serif mb-2">
-                  "{content.scriptures[currentScripture]?.text}"
-                </p>
-                <p className="text-gold font-medium">
-                  — {content.scriptures[currentScripture]?.reference}
-                </p>
-              </motion.div>
-            </AnimatePresence>
+          {/* Enhanced Scripture Carousel */}
+          <div className="relative h-24 mb-10 flex items-center justify-center">
+            {/* Left Arrow */}
+            <button
+              onClick={prevScripture}
+              className="absolute left-0 z-20 p-2 rounded-full bg-gold/20 backdrop-blur-sm border border-gold/30 text-gold hover:bg-gold/30 transition-all duration-300 hover:scale-110"
+              aria-label="Previous verse"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+
+            {/* Scripture Content */}
+            <div className="flex-1 px-12">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentScripture}
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.5, ease: 'easeInOut' }}
+                  className="text-center"
+                >
+                  <p className="text-primary-foreground/90 text-lg md:text-xl italic font-serif mb-2">
+                    "{content.scriptures[currentScripture]?.text}"
+                  </p>
+                  <p className="text-gold font-medium">
+                    — {content.scriptures[currentScripture]?.reference}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Right Arrow */}
+            <button
+              onClick={nextScripture}
+              className="absolute right-0 z-20 p-2 rounded-full bg-gold/20 backdrop-blur-sm border border-gold/30 text-gold hover:bg-gold/30 transition-all duration-300 hover:scale-110"
+              aria-label="Next verse"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
           </div>
 
           {/* Scripture Indicators */}
@@ -101,14 +146,23 @@ const HeroSection = () => {
             {content.scriptures.map((_, index) => (
               <button
                 key={index}
-                onClick={() => setCurrentScripture(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                onClick={() => goToScripture(index)}
+                className={`transition-all duration-300 rounded-full ${
                   index === currentScripture
-                    ? 'w-8 bg-gold'
-                    : 'bg-primary-foreground/30 hover:bg-primary-foreground/50'
+                    ? 'w-8 h-2 bg-gold'
+                    : 'w-2 h-2 bg-primary-foreground/30 hover:bg-primary-foreground/50 hover:scale-125'
                 }`}
+                aria-label={`Go to verse ${index + 1}`}
               />
             ))}
+          </div>
+
+          {/* Auto-play indicator */}
+          <div className="flex justify-center mb-6">
+            <div className="text-xs text-primary-foreground/50 flex items-center gap-2">
+              <div className={`w-1 h-1 rounded-full ${isAutoPlaying ? 'bg-gold animate-pulse' : 'bg-primary-foreground/30'}`} />
+              {isAutoPlaying ? 'Auto-playing' : 'Manual control'}
+            </div>
           </div>
 
           {/* CTA Buttons */}
