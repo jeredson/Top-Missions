@@ -1,6 +1,6 @@
 const GITHUB_API = 'https://api.github.com';
 const REPO_OWNER = 'jeredson'; // Replace with your GitHub username
-const REPO_NAME = 'digital-sanctuary-church';
+const REPO_NAME = 'Top-Missions';
 const CONTENT_FILE = 'src/data/content.json';
 
 export class GitHubSync {
