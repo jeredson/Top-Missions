@@ -7,6 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { ContentProvider } from "@/contexts/ContentContext";
 import { InlineEditProvider } from "@/contexts/InlineEditContext";
 import { EditModeIndicator } from "@/components/ui/EditModeIndicator";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
 import AboutPage from "./pages/AboutPage";
 import ServicesPage from "./pages/ServicesPage";
@@ -20,32 +21,34 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <HelmetProvider>
-      <ContentProvider>
-        <InlineEditProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <EditModeIndicator />
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/services" element={<ServicesPage />} />
-                <Route path="/teens" element={<TeensPage />} />
-                <Route path="/youth" element={<YouthPage />} />
-                <Route path="/media" element={<MediaPage />} />
-                <Route path="/contact" element={<ContactPage />} />
-                <Route path="/admin" element={<AdminPage />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
-        </InlineEditProvider>
-      </ContentProvider>
-    </HelmetProvider>
-  </QueryClientProvider>
+  <ErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <HelmetProvider>
+        <ContentProvider>
+          <InlineEditProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <EditModeIndicator />
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="/services" element={<ServicesPage />} />
+                  <Route path="/teens" element={<TeensPage />} />
+                  <Route path="/youth" element={<YouthPage />} />
+                  <Route path="/media" element={<MediaPage />} />
+                  <Route path="/contact" element={<ContactPage />} />
+                  <Route path="/admin" element={<AdminPage />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            </TooltipProvider>
+          </InlineEditProvider>
+        </ContentProvider>
+      </HelmetProvider>
+    </QueryClientProvider>
+  </ErrorBoundary>
 );
 
 export default App;

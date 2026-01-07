@@ -171,19 +171,28 @@ export const ContentProvider: React.FC<{ children: ReactNode }> = ({ children })
     if (!githubSync) return;
 
     const checkForUpdates = async () => {
-      const result = await githubSync.checkForUpdates();
-      if (result.hasUpdates && result.content) {
-        setContent(result.content);
-        githubSync.markSynced();
+      try {
+        const result = await githubSync.checkForUpdates();
+        if (result.hasUpdates && result.content) {
+          setContent(result.content);
+          githubSync.markSynced();
+        }
+      } catch (error) {
+        console.error('Auto-sync failed:', error);
+        // Continue with local content if sync fails
       }
     };
 
-    // Check immediately
-    checkForUpdates();
+    // Check after a delay to avoid blocking initial load
+    const timeoutId = setTimeout(checkForUpdates, 2000);
 
     // Check every 30 seconds
     const interval = setInterval(checkForUpdates, 30000);
-    return () => clearInterval(interval);
+    
+    return () => {
+      clearTimeout(timeoutId);
+      clearInterval(interval);
+    };
   }, [githubSync]);
 
   const updateContent = (newContent: ContentData) => {

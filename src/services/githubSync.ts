@@ -1,5 +1,5 @@
 const GITHUB_API = 'https://api.github.com';
-const REPO_OWNER = 'YOUR_USERNAME'; // Replace with your GitHub username
+const REPO_OWNER = 'jeredson'; // Replace with your GitHub username
 const REPO_NAME = 'digital-sanctuary-church';
 const CONTENT_FILE = 'src/data/content.json';
 
@@ -51,7 +51,19 @@ export class GitHubSync {
 
   async checkForUpdates(): Promise<{ hasUpdates: boolean; content?: any }> {
     try {
+      // First check if the repository exists
+      const repoResponse = await fetch(`${GITHUB_API}/repos/${REPO_OWNER}/${REPO_NAME}`);
+      if (!repoResponse.ok) {
+        console.log('Repository not found or not accessible');
+        return { hasUpdates: false };
+      }
+
       const response = await fetch(`${GITHUB_API}/repos/${REPO_OWNER}/${REPO_NAME}/commits?path=${CONTENT_FILE}&per_page=1`);
+      if (!response.ok) {
+        console.log('Content file not found in repository');
+        return { hasUpdates: false };
+      }
+      
       const commits = await response.json();
       
       if (commits.length > 0) {
