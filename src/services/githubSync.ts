@@ -49,6 +49,32 @@ export class GitHubSync {
     }
   }
 
+  async checkForUpdates(): Promise<{ hasUpdates: boolean; content?: any }> {
+    try {
+      const response = await fetch(`${GITHUB_API}/repos/${REPO_OWNER}/${REPO_NAME}/commits?path=${CONTENT_FILE}&per_page=1`);
+      const commits = await response.json();
+      
+      if (commits.length > 0) {
+        const lastCommitDate = commits[0].commit.committer.date;
+        const lastSyncDate = localStorage.getItem('last_sync_date');
+        
+        if (!lastSyncDate || new Date(lastCommitDate) > new Date(lastSyncDate)) {
+          const content = await this.loadContent();
+          return { hasUpdates: true, content };
+        }
+      }
+      
+      return { hasUpdates: false };
+    } catch (error) {
+      console.error('Failed to check for updates:', error);
+      return { hasUpdates: false };
+    }
+  }
+
+  markSynced(): void {
+    localStorage.setItem('last_sync_date', new Date().toISOString());
+  }
+
   private async getCurrentFile() {
     const response = await fetch(`${GITHUB_API}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CONTENT_FILE}`, {
       headers: {

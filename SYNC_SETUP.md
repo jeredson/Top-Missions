@@ -33,8 +33,8 @@ const REPO_OWNER = 'YOUR_USERNAME'; // Replace with your actual GitHub username
 
 - **Make Changes**: Edit content in the admin panel on any device
 - **Save to GitHub**: Click "Save to GitHub" button
-- **Auto-Sync**: Other devices will load the latest content from GitHub
-- **Cross-Device**: Changes appear on all devices within minutes
+- **Auto-Sync**: Other devices automatically check for updates every 30 seconds
+- **Cross-Device**: Changes appear on all devices automatically within 30 seconds
 
 ### Usage Instructions
 
@@ -44,13 +44,16 @@ const REPO_OWNER = 'YOUR_USERNAME'; // Replace with your actual GitHub username
 3. Changes are uploaded to GitHub
 
 #### On Device 2 (Getting Updates):
-1. Open admin panel
-2. Click "Load from GitHub"
-3. Latest changes appear instantly
+1. Updates load automatically every 30 seconds
+2. No manual action needed
+3. Changes appear seamlessly
 
-### Automatic Sync (Optional)
+### Automatic Sync Features
 
-To make sync fully automatic, the website will check for updates every time someone visits the admin panel.
+✅ **Auto-Detection**: Checks for updates every 30 seconds
+✅ **Silent Updates**: Content updates without page refresh
+✅ **Smart Sync**: Only downloads when changes are detected
+✅ **Background Process**: Works while you browse the site
 
 ### Troubleshooting
 

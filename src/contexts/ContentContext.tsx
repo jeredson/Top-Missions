@@ -166,6 +166,26 @@ export const ContentProvider: React.FC<{ children: ReactNode }> = ({ children })
     return token ? new GitHubSync(token) : null;
   });
 
+  // Auto-sync check on app load and periodically
+  useEffect(() => {
+    if (!githubSync) return;
+
+    const checkForUpdates = async () => {
+      const result = await githubSync.checkForUpdates();
+      if (result.hasUpdates && result.content) {
+        setContent(result.content);
+        githubSync.markSynced();
+      }
+    };
+
+    // Check immediately
+    checkForUpdates();
+
+    // Check every 30 seconds
+    const interval = setInterval(checkForUpdates, 30000);
+    return () => clearInterval(interval);
+  }, [githubSync]);
+
   const updateContent = (newContent: ContentData) => {
     setContent(newContent);
   };
@@ -174,6 +194,7 @@ export const ContentProvider: React.FC<{ children: ReactNode }> = ({ children })
     if (!githubSync) return false;
     const success = await githubSync.saveContent(content);
     if (success) {
+      githubSync.markSynced();
       alert('Content synced to GitHub successfully!');
     } else {
       alert('Failed to sync to GitHub. Check your token and try again.');
