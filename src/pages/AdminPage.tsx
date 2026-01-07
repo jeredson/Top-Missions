@@ -30,7 +30,18 @@ import {
 import { Link } from 'react-router-dom';
 
 const AdminPage = () => {
-  const { content, updateContent, isAdmin, exportContent, editMode, setEditMode } = useContent();
+  const { 
+    content, 
+    updateContent, 
+    isAdmin, 
+    exportContent, 
+    editMode, 
+    setEditMode,
+    syncToGitHub,
+    loadFromGitHub,
+    setGitHubToken,
+    hasGitHubToken
+  } = useContent();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [editingImage, setEditingImage] = useState<string | null>(null);
@@ -267,6 +278,38 @@ const AdminPage = () => {
             <h2 className="font-display text-3xl font-bold text-foreground mb-8">
               Dashboard
             </h2>
+            
+            {/* GitHub Sync Section */}
+            <Card className="mb-6">
+              <CardHeader>
+                <CardTitle>GitHub Sync</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {!hasGitHubToken ? (
+                  <div className="space-y-2">
+                    <Label>GitHub Personal Access Token</Label>
+                    <Input
+                      type="password"
+                      placeholder="ghp_xxxxxxxxxxxx"
+                      onChange={(e) => setGitHubToken(e.target.value)}
+                    />
+                    <p className="text-sm text-muted-foreground">
+                      Create a token at GitHub Settings → Developer settings → Personal access tokens
+                    </p>
+                  </div>
+                ) : (
+                  <div className="flex gap-4">
+                    <Button onClick={syncToGitHub} className="bg-green-600 hover:bg-green-700">
+                      Save to GitHub
+                    </Button>
+                    <Button onClick={loadFromGitHub} variant="outline">
+                      Load from GitHub
+                    </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
             <div className="grid md:grid-cols-3 gap-6">
               <div className="bg-card p-6 rounded-xl border border-border">
                 <FileText className="w-8 h-8 text-primary mb-4" />

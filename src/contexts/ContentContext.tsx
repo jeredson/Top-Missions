@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import initialContent from '@/data/content.json';
+import { GitHubSync } from '@/services/githubSync';
 
 export interface Scripture {
   id: string;
@@ -110,6 +111,10 @@ export interface ContentData {
 interface ContentContextType {
   content: ContentData;
   updateContent: (newContent: ContentData) => void;
+  syncToGitHub: () => Promise<boolean>;
+  loadFromGitHub: () => Promise<void>;
+  setGitHubToken: (token: string) => void;
+  hasGitHubToken: boolean;
   isAdmin: boolean;
   setIsAdmin: (value: boolean) => void;
   editMode: boolean;
@@ -124,6 +129,7 @@ const ContentContext = createContext<ContentContextType | undefined>(undefined);
 
 const STORAGE_KEY = 'church_content';
 const ADMIN_KEY = 'church_admin';
+const GITHUB_TOKEN_KEY = 'github_token';
 
 export const ContentProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [content, setContent] = useState<ContentData>(() => {
@@ -155,8 +161,40 @@ export const ContentProvider: React.FC<{ children: ReactNode }> = ({ children })
     }
   }, [isAdmin]);
 
+  const [githubSync, setGithubSync] = useState<GitHubSync | null>(() => {
+    const token = localStorage.getItem(GITHUB_TOKEN_KEY);
+    return token ? new GitHubSync(token) : null;
+  });
+
   const updateContent = (newContent: ContentData) => {
     setContent(newContent);
+  };
+
+  const syncToGitHub = async (): Promise<boolean> => {
+    if (!githubSync) return false;
+    const success = await githubSync.saveContent(content);
+    if (success) {
+      alert('Content synced to GitHub successfully!');
+    } else {
+      alert('Failed to sync to GitHub. Check your token and try again.');
+    }
+    return success;
+  };
+
+  const loadFromGitHub = async (): Promise<void> => {
+    if (!githubSync) return;
+    const githubContent = await githubSync.loadContent();
+    if (githubContent) {
+      setContent(githubContent);
+      alert('Content loaded from GitHub!');
+    } else {
+      alert('Failed to load from GitHub.');
+    }
+  };
+
+  const setGitHubToken = (token: string) => {
+    localStorage.setItem(GITHUB_TOKEN_KEY, token);
+    setGithubSync(new GitHubSync(token));
   };
 
   const exportContent = () => {
@@ -214,6 +252,10 @@ export const ContentProvider: React.FC<{ children: ReactNode }> = ({ children })
         addPage,
         updatePage,
         deletePage,
+        syncToGitHub,
+        loadFromGitHub,
+        setGitHubToken,
+        hasGitHubToken: !!githubSync,
       }}
     >
       {children}
